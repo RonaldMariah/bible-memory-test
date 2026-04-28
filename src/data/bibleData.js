@@ -1,9 +1,9 @@
 /**
- * Utility for fetching Bible verses from aruljohn/Bible-kjv GitHub repo
+ * Utility for fetching Bible verses from aruljohn/Bible-niv GitHub repo
  * Uses raw content from GitHub for direct JSON access
  */
 
-const GITHUB_RAW_URL = 'https://raw.githubusercontent.com/aruljohn/Bible-kjv/master/';
+const GITHUB_RAW_URL = 'https://raw.githubusercontent.com/aruljohn/Bible-niv/master/';
 
 // Map of Bible book names to their JSON filenames
 const BOOK_NAMES = {
@@ -15,12 +15,12 @@ const BOOK_NAMES = {
   'Joshua': 'Joshua.json',
   'Judges': 'Judges.json',
   'Ruth': 'Ruth.json',
-  '1 Samuel': '1Samuel.json',
-  '2 Samuel': '2Samuel.json',
-  '1 Kings': '1Kings.json',
-  '2 Kings': '2Kings.json',
-  '1 Chronicles': '1Chronicles.json',
-  '2 Chronicles': '2Chronicles.json',
+  '1 Samuel': '1 Samuel.json',
+  '2 Samuel': '2 Samuel.json',
+  '1 Kings': '1 Kings.json',
+  '2 Kings': '2 Kings.json',
+  '1 Chronicles': '1 Chronicles.json',
+  '2 Chronicles': '2 Chronicles.json',
   'Ezra': 'Ezra.json',
   'Nehemiah': 'Nehemiah.json',
   'Esther': 'Esther.json',
@@ -51,25 +51,25 @@ const BOOK_NAMES = {
   'John': 'John.json',
   'Acts': 'Acts.json',
   'Romans': 'Romans.json',
-  '1 Corinthians': '1Corinthians.json',
-  '2 Corinthians': '2Corinthians.json',
+  '1 Corinthians': '1 Corinthians.json',
+  '2 Corinthians': '2 Corinthians.json',
   'Galatians': 'Galatians.json',
   'Ephesians': 'Ephesians.json',
   'Philippians': 'Philippians.json',
   'Colossians': 'Colossians.json',
-  '1 Thessalonians': '1Thessalonians.json',
-  '2 Thessalonians': '2Thessalonians.json',
-  '1 Timothy': '1Timothy.json',
-  '2 Timothy': '2Timothy.json',
+  '1 Thessalonians': '1 Thessalonians.json',
+  '2 Thessalonians': '2 Thessalonians.json',
+  '1 Timothy': '1 Timothy.json',
+  '2 Timothy': '2 Timothy.json',
   'Titus': 'Titus.json',
   'Philemon': 'Philemon.json',
   'Hebrews': 'Hebrews.json',
   'James': 'James.json',
-  '1 Peter': '1Peter.json',
-  '2 Peter': '2Peter.json',
-  '1 John': '1John.json',
-  '2 John': '2John.json',
-  '3 John': '3John.json',
+  '1 Peter': '1 Peter.json',
+  '2 Peter': '2 Peter.json',
+  '1 John': '1 John.json',
+  '2 John': '2 John.json',
+  '3 John': '3 John.json',
   'Jude': 'Jude.json',
   'Revelation': 'Revelation.json'
 };
