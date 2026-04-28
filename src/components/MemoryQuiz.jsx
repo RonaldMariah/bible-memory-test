@@ -228,6 +228,11 @@ function MemoryQuiz({ selectedVerse, onSelectNewVerse }) {
     }, 0);
   };
 
+  const handleChangeDifficulty = (newDifficulty) => {
+    setDifficulty(newDifficulty);
+    setShowAnswer(false);
+  };
+
   const renderVerseWithBlanks = () => {
     return (
       <div style={{ lineHeight: '2', fontSize: 'clamp(1rem, 3vw, 1.1rem)' }}>
@@ -458,13 +463,38 @@ function MemoryQuiz({ selectedVerse, onSelectNewVerse }) {
       </div>
 
       {!showAnswer && (
-        <div className="button-group">
-          <button className="btn-primary" onClick={handleCheckAnswer}>
-            Check Answer
-          </button>
-          <button className="btn-secondary" onClick={handleRevealAnswer}>
-            Show Answers
-          </button>
+        <div>
+          <div className="button-group">
+            <button className="btn-primary" onClick={handleCheckAnswer}>
+              Check Answer
+            </button>
+            <button className="btn-secondary" onClick={handleRevealAnswer}>
+              Show Answers
+            </button>
+          </div>
+
+          {feedback && (
+            <div style={{ marginTop: '1.5rem' }}>
+              <h2 style={{ marginBottom: '1rem' }}>Try Another Difficulty:</h2>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                {Object.entries(DIFFICULTY_LEVELS).map(([level, config]) => (
+                  <button
+                    key={level}
+                    className={level === difficulty ? 'btn-primary' : 'btn-secondary'}
+                    onClick={() => handleChangeDifficulty(level)}
+                    style={{ padding: '0.75rem' }}
+                  >
+                    <div style={{ fontSize: 'clamp(0.95rem, 2vw, 1.1rem)', fontWeight: '700', marginBottom: '0.3rem' }}>
+                      {config.label}
+                    </div>
+                    <div style={{ fontSize: 'clamp(0.75rem, 1.3vw, 0.85rem)', opacity: 0.9 }}>
+                      {Math.round(config.missRate * 100)}%
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       )}
 
@@ -487,6 +517,25 @@ function MemoryQuiz({ selectedVerse, onSelectNewVerse }) {
             >
               Next Verse
             </button>
+          </div>
+
+          <h2 style={{ marginTop: '2rem', marginBottom: '1rem' }}>Try Another Difficulty:</h2>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+            {Object.entries(DIFFICULTY_LEVELS).map(([level, config]) => (
+              <button
+                key={level}
+                className={level === difficulty ? 'btn-primary' : 'btn-secondary'}
+                onClick={() => handleChangeDifficulty(level)}
+                style={{ padding: '0.75rem' }}
+              >
+                <div style={{ fontSize: 'clamp(0.95rem, 2vw, 1.1rem)', fontWeight: '700', marginBottom: '0.3rem' }}>
+                  {config.label}
+                </div>
+                <div style={{ fontSize: 'clamp(0.75rem, 1.3vw, 0.85rem)', opacity: 0.9 }}>
+                  {Math.round(config.missRate * 100)}%
+                </div>
+              </button>
+            ))}
           </div>
         </div>
       )}
