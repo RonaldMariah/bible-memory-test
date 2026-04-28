@@ -318,6 +318,7 @@ function MemoryQuiz({ selectedVerse, onSelectNewVerse }) {
       <div>
         <div className="verse-display" style={{ background: '#f0f4ff' }}>
           <div className="verse-reference">{selectedVerse.reference}</div>
+          <div className="verse-text" style={{ marginTop: '1rem' }}>"{verseText}"</div>
         </div>
 
         <h2 style={{ marginTop: '2rem', marginBottom: '1rem' }}>Select Difficulty Level:</h2>
