@@ -4,7 +4,7 @@ import popularVerses from '../data/popularVerses.js';
 function PopularVersesList({ onSelectVerse }) {
   return (
     <div className="popular-verses">
-      <p style={{ color: '#999', marginBottom: '1rem', fontSize: '0.9rem' }}>
+      <p style={{ color: '#000000ff', marginBottom: '1rem', fontSize: '0.9rem' }}>
         Quick select from popular Bible passages:
       </p>
       <ul className="verse-list">
