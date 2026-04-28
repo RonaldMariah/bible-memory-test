@@ -38,10 +38,7 @@ body {
 }
 
 h1 {
-  background: linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #2C3E7F;
   margin-bottom: 1.5rem;
   text-align: center;
   font-size: clamp(1.5rem, 5vw, 2rem);
@@ -65,8 +62,8 @@ h2 {
 }
 
 .tab-button {
-  background: linear-gradient(135deg, #F0F0F5 0%, #F8F9FF 100%);
-  border: 2px solid #E0E0FF;
+  background: #F5F5F5;
+  border: 2px solid #E0E0E0;
   padding: 0.75rem 1.5rem;
   font-size: clamp(0.875rem, 2vw, 1rem);
   cursor: pointer;
@@ -78,7 +75,7 @@ h2 {
 }
 
 .tab-button.active {
-  background: linear-gradient(135deg, #FF6B6B 0%, #FF8E72 100%);
+  background: #FF6B6B;
   color: white;
   border-color: #FF6B6B;
   box-shadow: 0 8px 20px rgba(255, 107, 107, 0.3);
@@ -86,7 +83,7 @@ h2 {
 }
 
 .tab-button:hover {
-  background: linear-gradient(135deg, #4ECDC4 0%, #45B7AA 100%);
+  background: #4ECDC4;
   color: white;
   border-color: #4ECDC4;
   box-shadow: 0 8px 20px rgba(78, 205, 196, 0.3);
@@ -102,7 +99,7 @@ h2 {
 
 .verse-item {
   padding: 1.25rem;
-  background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFF 100%);
+  background: #FFFFFF;
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -112,14 +109,14 @@ h2 {
 }
 
 .verse-item:hover {
-  background: linear-gradient(135deg, #FF6B6B 0%, #FFE5E5 100%);
+  background: #FFE5E5;
   transform: translateY(-4px);
   border-left-color: #FF6B6B;
   box-shadow: 0 12px 30px rgba(255, 107, 107, 0.2);
 }
 
 .verse-item.selected {
-  background: linear-gradient(135deg, #4ECDC4 0%, #E0F7F6 100%);
+  background: #E0F7F6;
   border-left-color: #2C3E7F;
   border: 2px solid #4ECDC4;
   box-shadow: 0 12px 30px rgba(78, 205, 196, 0.3);
@@ -127,7 +124,7 @@ h2 {
 
 .form-group {
   margin-bottom: 1.5rem;
-  background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFF 100%);
+  background: #FFFFFF;
   padding: 1.25rem;
   border-radius: 12px;
   border: 2px solid #E8EAFF;
@@ -190,7 +187,7 @@ button {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #FF6B6B 0%, #FF8E72 100%);
+  background: #FF6B6B;
   color: white;
 }
 
@@ -206,7 +203,7 @@ button {
 }
 
 .btn-secondary {
-  background: linear-gradient(135deg, #4ECDC4 0%, #45B7AA 100%);
+  background: #4ECDC4;
   color: white;
 }
 
@@ -216,7 +213,7 @@ button {
 }
 
 .verse-display {
-  background: linear-gradient(135deg, #FFFFFF 0%, #F0F9FF 100%);
+  background: #FFFFFF;
   padding: 1.75rem;
   border-radius: 15px;
   border-left: 5px solid #4ECDC4;
@@ -258,7 +255,7 @@ button {
 }
 
 .progress-fill {
-  background: linear-gradient(90deg, #FF6B6B 0%, #FF8E72 50%, #4ECDC4 100%);
+  background: #FF6B6B;
   height: 100%;
   transition: width 0.5s ease;
   border-radius: 10px;
@@ -266,7 +263,7 @@ button {
 }
 
 .error-message {
-  background: linear-gradient(135deg, #FFE5E5 0%, #FFCCCC 100%);
+  background: #FFE5E5;
   color: #C92A2A;
   padding: 1.25rem;
   border-radius: 12px;
@@ -278,7 +275,7 @@ button {
 }
 
 .success-message {
-  background: linear-gradient(135deg, #E0FFE0 0%, #CCFFCC 100%);
+  background: #E0FFE0;
   color: #2B7A2B;
   padding: 1.25rem;
   border-radius: 12px;
@@ -319,7 +316,7 @@ button {
 }
 
 .stat-card {
-  background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFF 100%);
+  background: #FFFFFF;
   padding: 1.5rem;
   border-radius: 15px;
   text-align: center;
@@ -336,10 +333,7 @@ button {
 .stat-value {
   font-size: clamp(1.3rem, 3vw, 1.8rem);
   font-weight: 800;
-  background: linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #FF6B6B;
 }
 
 .stat-label {

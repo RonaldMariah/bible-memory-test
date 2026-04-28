@@ -353,7 +353,7 @@ function MemoryQuiz({ selectedVerse, onSelectNewVerse }) {
 
         <h2 style={{ marginTop: '2rem', marginBottom: '1rem' }}>Select Difficulty Level:</h2>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: '1rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
           <button
             className="btn-primary"
             onClick={() => handleDifficultySelect('easy')}
