@@ -1,16 +1,16 @@
 # Bible Memory Test App
 
-A static React + Vite web application for practicing Bible memorization using the New International Version (NIV) Bible.
+A static React + Vite web application for practicing Bible memorization using the English Standard Version (ESV) Bible.
 
 ## Features
 
 - **No Backend Required**: Fully client-side application that works in any browser
 - **Two Verse Selection Methods**:
   - **Popular Verses**: Quick-select from a curated list of commonly memorized passages
-  - **Manual Picker**: Browse and select any book, chapter, and verse from the entire NIV Bible
+  - **Manual Picker**: Browse and select any book, chapter, and verse from the entire ESV Bible
 - **Memory Practice Mode**: Type verses from memory and get instant feedback
 - **Progress Tracking**: Track attempts and successful recitations
-- **NIV Bible Data**: Uses official NIV JSON data from the [aruljohn/Bible-niv](https://github.com/aruljohn/Bible-niv) repository
+- **ESV Bible Data**: Uses official ESV JSON data from the [lguenth/mdbible](https://github.com/lguenth/mdbible) repository
 
 ## Tech Stack
 
@@ -95,8 +95,8 @@ Your site will be available at: `https://RonaldMariah.github.io/bible-memory-tes
 ## Data Source
 
 Bible verses are fetched from:
-- **Repository**: https://github.com/aruljohn/Bible-niv
-- **Data**: NIV (New International Version) JSON files
+- **Repository**: https://github.com/lguenth/mdbible
+- **Data**: ESV (English Standard Version) JSON files
 - **Hosted**: GitHub Raw Content CDN for fast access
 
 The app caches fetched Bible books to minimize network requests.
@@ -198,6 +198,6 @@ For issues or questions, please open an issue on the GitHub repository.
 
 ## Acknowledgments
 
-- [aruljohn/Bible-niv](https://github.com/aruljohn/Bible-niv) for the Bible data
+- [lguenth/mdbible](https://github.com/lguenth/mdbible) for the Bible data
 - [Vite](https://vitejs.dev/) for the amazing build tool
 - [React](https://react.dev/) for the UI library
