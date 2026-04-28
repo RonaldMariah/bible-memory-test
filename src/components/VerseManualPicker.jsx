@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getBooks, getChapters, getVerses } from '../data/bibleData.js';
+import { getBooks, getChapters, getVerses, getVerse } from '../data/bibleData.js';
 
 function VerseManualPicker({ onSelectVerse }) {
   const [books, setBooks] = useState([]);
@@ -10,6 +10,8 @@ function VerseManualPicker({ onSelectVerse }) {
   const [selectedVerse, setSelectedVerse] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [previewVerse, setPreviewVerse] = useState(null);
+  const [previewLoading, setPreviewLoading] = useState(false);
 
   // Load books on mount
   useEffect(() => {
@@ -61,6 +63,25 @@ function VerseManualPicker({ onSelectVerse }) {
         setLoading(false);
       });
   }, [selectedBook, selectedChapter]);
+
+  // Load preview verse when selections change
+  useEffect(() => {
+    if (!selectedBook || !selectedChapter || !selectedVerse) {
+      setPreviewVerse(null);
+      return;
+    }
+
+    setPreviewLoading(true);
+    getVerse(selectedBook, parseInt(selectedChapter), parseInt(selectedVerse))
+      .then((verse) => {
+        setPreviewVerse(verse);
+        setPreviewLoading(false);
+      })
+      .catch(() => {
+        setPreviewVerse(null);
+        setPreviewLoading(false);
+      });
+  }, [selectedBook, selectedChapter, selectedVerse]);
 
   const handleSelectVerse = () => {
     if (!selectedBook || !selectedChapter || !selectedVerse) {
@@ -131,6 +152,24 @@ function VerseManualPicker({ onSelectVerse }) {
           ))}
         </select>
       </div>
+
+      {previewVerse && (
+        <div className="verse-preview">
+          <h4 style={{ marginTop: '1rem', marginBottom: '0.5rem' }}>Preview</h4>
+          <p style={{ 
+            fontSize: '0.95rem', 
+            lineHeight: '1.6', 
+            backgroundColor: '#f5f5f5', 
+            padding: '1rem', 
+            borderRadius: '4px',
+            marginBottom: '1rem'
+          }}>
+            <strong>{previewVerse.reference}</strong>
+            <br />
+            {previewVerse.text}
+          </p>
+        </div>
+      )}
 
       <button
         className="btn-primary"
