@@ -213,6 +213,21 @@ function MemoryQuiz({ selectedVerse, onSelectNewVerse }) {
     onSelectNewVerse();
   };
 
+  const handleRetry = () => {
+    setAnswers(Array(words.length).fill(''));
+    setFeedback('');
+    setShowAnswer(false);
+    setCurrentFocusIndex(0);
+
+    // Focus first missing word input
+    setTimeout(() => {
+      const firstMissingIdx = words.findIndex(w => w.isMissing);
+      if (firstMissingIdx >= 0 && inputRefs.current[firstMissingIdx]) {
+        inputRefs.current[firstMissingIdx].focus();
+      }
+    }, 0);
+  };
+
   const renderVerseWithBlanks = () => {
     return (
       <div style={{ lineHeight: '2', fontSize: 'clamp(1rem, 3vw, 1.1rem)' }}>
@@ -459,13 +474,20 @@ function MemoryQuiz({ selectedVerse, onSelectNewVerse }) {
             <div className="verse-text">"{verseText}"</div>
             <div className="verse-reference">- {selectedVerse.reference}</div>
           </div>
-          <button
-            className="btn-primary"
-            onClick={handleNewVerse}
-            style={{ width: '100%' }}
-          >
-            Next Verse
-          </button>
+          <div className="button-group">
+            <button
+              className="btn-primary"
+              onClick={handleRetry}
+            >
+              Retry
+            </button>
+            <button
+              className="btn-primary"
+              onClick={handleNewVerse}
+            >
+              Next Verse
+            </button>
+          </div>
         </div>
       )}
 
