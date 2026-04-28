@@ -199,7 +199,7 @@ function MemoryQuiz({ selectedVerse, onSelectNewVerse }) {
 
   const renderVerseWithBlanks = () => {
     return (
-      <div style={{ lineHeight: '2', fontSize: '1.1rem' }}>
+      <div style={{ lineHeight: '2', fontSize: 'clamp(1rem, 3vw, 1.1rem)' }}>
         {words.map((word, index) => {
           const wordLength = word.cleanWord.length;
           
@@ -216,7 +216,7 @@ function MemoryQuiz({ selectedVerse, onSelectNewVerse }) {
                         letterSpacing: '0.15em',
                         fontWeight: '600',
                         color: '#667eea',
-                        fontSize: '1.1rem',
+                        fontSize: 'inherit',
                         fontStyle: 'italic',
                         fontFamily: 'inherit'
                       }}
@@ -246,7 +246,7 @@ function MemoryQuiz({ selectedVerse, onSelectNewVerse }) {
                         borderRadius: '4px',
                         textAlign: 'center',
                         fontStyle: 'normal',
-                        fontSize: '1.1rem',
+                        fontSize: 'inherit',
                         fontWeight: '600',
                         backgroundColor: 'transparent',
                         color: '#333',
@@ -321,43 +321,43 @@ function MemoryQuiz({ selectedVerse, onSelectNewVerse }) {
 
         <h2 style={{ marginTop: '2rem', marginBottom: '1rem' }}>Select Difficulty Level:</h2>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: '1rem' }}>
           <button
             className="btn-primary"
             onClick={() => handleDifficultySelect('easy')}
-            style={{ padding: '1.5rem' }}
+            style={{ padding: '1rem' }}
           >
-            <div style={{ fontSize: '1.3rem', fontWeight: '700', marginBottom: '0.5rem' }}>
+            <div style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.3rem)', fontWeight: '700', marginBottom: '0.5rem' }}>
               Easy
             </div>
-            <div style={{ fontSize: '0.9rem', opacity: 0.9 }}>
-              20% of words missing
+            <div style={{ fontSize: 'clamp(0.8rem, 1.5vw, 0.9rem)', opacity: 0.9 }}>
+              20%
             </div>
           </button>
 
           <button
             className="btn-primary"
             onClick={() => handleDifficultySelect('medium')}
-            style={{ padding: '1.5rem' }}
+            style={{ padding: '1rem' }}
           >
-            <div style={{ fontSize: '1.3rem', fontWeight: '700', marginBottom: '0.5rem' }}>
+            <div style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.3rem)', fontWeight: '700', marginBottom: '0.5rem' }}>
               Medium
             </div>
-            <div style={{ fontSize: '0.9rem', opacity: 0.9 }}>
-              50% of words missing
+            <div style={{ fontSize: 'clamp(0.8rem, 1.5vw, 0.9rem)', opacity: 0.9 }}>
+              50%
             </div>
           </button>
 
           <button
             className="btn-primary"
             onClick={() => handleDifficultySelect('hard')}
-            style={{ padding: '1.5rem' }}
+            style={{ padding: '1rem' }}
           >
-            <div style={{ fontSize: '1.3rem', fontWeight: '700', marginBottom: '0.5rem' }}>
+            <div style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.3rem)', fontWeight: '700', marginBottom: '0.5rem' }}>
               Hard
             </div>
-            <div style={{ fontSize: '0.9rem', opacity: 0.9 }}>
-              80% of words missing
+            <div style={{ fontSize: 'clamp(0.8rem, 1.5vw, 0.9rem)', opacity: 0.9 }}>
+              80%
             </div>
           </button>
         </div>
@@ -399,9 +399,9 @@ function MemoryQuiz({ selectedVerse, onSelectNewVerse }) {
         className="verse-display"
         style={{
           background: '#fafafa',
-          padding: '2rem',
+          padding: 'clamp(1rem, 3vw, 2rem)',
           lineHeight: '2.2',
-          fontSize: '1.1rem',
+          fontSize: 'clamp(1rem, 3vw, 1.1rem)',
           borderLeft: '4px solid #667eea'
         }}
       >
