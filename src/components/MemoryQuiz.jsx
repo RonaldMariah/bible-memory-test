@@ -152,6 +152,21 @@ function MemoryQuiz({ selectedVerse, onSelectNewVerse }) {
         inputRefs.current[nextMissingIdx]?.focus();
         setCurrentFocusIndex(nextMissingIdx);
       }
+    } else if (e.key === 'Backspace' && answers[index] === '') {
+      // If input is empty and backspace is pressed, move to previous missing word
+      e.preventDefault();
+      const prevMissingIdx = [...words]
+        .reverse()
+        .findIndex((w, i) => {
+          const actualIdx = words.length - 1 - i;
+          return w.isMissing && actualIdx < index;
+        });
+      
+      if (prevMissingIdx >= 0) {
+        const actualPrevIdx = words.length - 1 - prevMissingIdx;
+        inputRefs.current[actualPrevIdx]?.focus();
+        setCurrentFocusIndex(actualPrevIdx);
+      }
     }
   };
 
