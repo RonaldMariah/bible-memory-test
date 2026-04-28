@@ -5,6 +5,21 @@
 
 const GITHUB_RAW_URL = 'https://raw.githubusercontent.com/aruljohn/Bible-niv/master/';
 
+// Array of Bible book names in biblical order
+const BOOKS_IN_ORDER = [
+  'Genesis', 'Exodus', 'Leviticus', 'Numbers', 'Deuteronomy',
+  'Joshua', 'Judges', 'Ruth', '1 Samuel', '2 Samuel', '1 Kings', '2 Kings',
+  '1 Chronicles', '2 Chronicles', 'Ezra', 'Nehemiah', 'Esther',
+  'Job', 'Psalms', 'Proverbs', 'Ecclesiastes', 'Isaiah', 'Jeremiah', 'Lamentations',
+  'Ezekiel', 'Daniel', 'Hosea', 'Joel', 'Amos', 'Obadiah', 'Jonah', 'Micah',
+  'Nahum', 'Habakkuk', 'Zephaniah', 'Haggai', 'Zechariah', 'Malachi',
+  'Matthew', 'Mark', 'Luke', 'John', 'Acts',
+  'Romans', '1 Corinthians', '2 Corinthians', 'Galatians', 'Ephesians',
+  'Philippians', 'Colossians', '1 Thessalonians', '2 Thessalonians',
+  '1 Timothy', '2 Timothy', 'Titus', 'Philemon', 'Hebrews', 'James',
+  '1 Peter', '2 Peter', '1 John', '2 John', '3 John', 'Jude', 'Revelation'
+];
+
 // Map of Bible book names to their JSON filenames
 const BOOK_NAMES = {
   'Genesis': 'Genesis.json',
@@ -147,11 +162,11 @@ export async function getVerse(book, chapter, verse) {
 }
 
 /**
- * Get list of available books
- * @returns {string[]} Array of book names
+ * Get list of available books in biblical order
+ * @returns {string[]} Array of book names in biblical order
  */
 export function getBooks() {
-  return Object.keys(BOOK_NAMES).sort();
+  return BOOKS_IN_ORDER;
 }
 
 /**
