@@ -23,8 +23,8 @@ function App() {
   return (
     <div className="container">
       <h1 onClick={handleHomeClick} style={{ cursor: 'pointer' }}>📖 Bible Memory Test</h1>
-      <p style={{ textAlign: 'center', color: '#999', fontSize: '0.85rem', marginBottom: '1.5rem', fontWeight: '500' }}>
-        NIV (New International Version)
+      <p style={{ textAlign: 'center', color: '#666', fontSize: '0.95rem', marginBottom: '1.5rem', fontWeight: '400', marginTop: '-0.5rem' }}>
+        Test your knowledge of Bible verses using the NIV (New International Version) translation
       </p>
 
       {!selectedVerse ? (
