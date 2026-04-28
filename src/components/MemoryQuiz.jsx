@@ -4,7 +4,8 @@ import { getVerse } from '../data/bibleData.js';
 const DIFFICULTY_LEVELS = {
   easy: { label: 'Easy', missRate: 0.2 },
   medium: { label: 'Medium', missRate: 0.5 },
-  hard: { label: 'Hard', missRate: 0.8 }
+  hard: { label: 'Hard', missRate: 0.8 },
+  mastery: { label: 'Mastery', missRate: 1.0 }
 };
 
 function MemoryQuiz({ selectedVerse, onSelectNewVerse }) {
@@ -358,6 +359,19 @@ function MemoryQuiz({ selectedVerse, onSelectNewVerse }) {
             </div>
             <div style={{ fontSize: 'clamp(0.8rem, 1.5vw, 0.9rem)', opacity: 0.9 }}>
               80%
+            </div>
+          </button>
+
+          <button
+            className="btn-primary"
+            onClick={() => handleDifficultySelect('mastery')}
+            style={{ padding: '1rem' }}
+          >
+            <div style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.3rem)', fontWeight: '700', marginBottom: '0.5rem' }}>
+              Mastery
+            </div>
+            <div style={{ fontSize: 'clamp(0.8rem, 1.5vw, 0.9rem)', opacity: 0.9 }}>
+              100%
             </div>
           </button>
         </div>
