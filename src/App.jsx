@@ -15,9 +15,14 @@ function App() {
     setSelectedVerse(null);
   };
 
+  const handleHomeClick = () => {
+    setSelectedVerse(null);
+    setCurrentTab('popular');
+  };
+
   return (
     <div className="container">
-      <h1>📖 Bible Memory Test</h1>
+      <h1 onClick={handleHomeClick} style={{ cursor: 'pointer' }}>📖 Bible Memory Test</h1>
       <p style={{ textAlign: 'center', color: '#999', fontSize: '0.85rem', marginBottom: '1.5rem', fontWeight: '500' }}>
         NIV (New International Version)
       </p>
