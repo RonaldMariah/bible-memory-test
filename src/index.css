@@ -12,7 +12,6 @@ body {
   font-family: 'Courier New', Courier, monospace;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(135deg, #FF6B6B 0%, #FF8E72 25%, #4ECDC4 50%, #45B7AA 75%, #2C3E7F 100%);
   min-height: 100vh;
   color: #333;
 }

@@ -18,6 +18,9 @@ function App() {
   return (
     <div className="container">
       <h1>📖 Bible Memory Test</h1>
+      <p style={{ textAlign: 'center', color: '#999', fontSize: '0.85rem', marginBottom: '1.5rem', fontWeight: '500' }}>
+        NIV (New International Version)
+      </p>
 
       {!selectedVerse ? (
         <>
