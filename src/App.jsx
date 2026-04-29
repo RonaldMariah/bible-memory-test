@@ -22,9 +22,9 @@ function App() {
 
   return (
     <div className="container">
-      <h1 onClick={handleHomeClick} style={{ cursor: 'pointer' }}>📖 Bible Memory Test</h1>
+      <h1 onClick={handleHomeClick} style={{ cursor: 'pointer' }}>📖 Memory Verses</h1>
       <p style={{ textAlign: 'center', color: '#000000ff', fontSize: '0.95rem', marginBottom: '1.5rem', fontWeight: '400', marginTop: '-0.5rem' }}>
-        Test your knowledge of Bible verses using the ESV (English Standard Version) translation
+        Memorize and practice Bible verses using the ESV (English Standard Version) translation
       </p>
 
       {!selectedVerse ? (

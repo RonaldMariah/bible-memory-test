@@ -1,4 +1,4 @@
-# Bible Memory Test App
+# Memory Verses App
 
 A static React + Vite web application for practicing Bible memorization using the English Standard Version (ESV) Bible.
 
