@@ -248,13 +248,15 @@ function MemoryQuiz({ selectedVerse, onSelectNewVerse }) {
                     <span
                       style={{
                         display: 'inline-block',
-                        position: 'relative',
+                        position: 'inherit',
                         letterSpacing: '0.15em',
                         fontWeight: '600',
                         color: '#667eea',
                         fontSize: 'inherit',
                         fontStyle: 'italic',
-                        fontFamily: 'inherit'
+                        fontFamily: 'inherit',
+                        marginLeft: '0.2ch',
+                        marginBottom: '-1ch'
                       }}
                     >
                       {Array(wordLength)
@@ -280,7 +282,7 @@ function MemoryQuiz({ selectedVerse, onSelectNewVerse }) {
                         margin: '0',
                         border: '2px solid transparent',
                         borderRadius: '4px',
-                        textAlign: 'center',
+                        textAlign: 'Left',
                         fontStyle: 'normal',
                         fontSize: 'inherit',
                         fontWeight: '600',

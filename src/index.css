@@ -144,6 +144,7 @@ h2 {
   border-radius: 12px;
   border: 2px solid #E8EAFF;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  margin-left: -1.0ch;
 }
 
 label {
@@ -164,6 +165,7 @@ input {
   transition: all 0.3s ease;
   font-family: inherit;
   background: white;
+  margin-left: -1.0ch;
 }
 
 select:focus,
@@ -235,6 +237,7 @@ button {
   border: 2px solid #E0F7F6;
   margin: 1.5rem 0;
   box-shadow: 0 8px 25px rgba(78, 205, 196, 0.15);
+  margin-left: -0.5ch;
 }
 
 .verse-text {
@@ -287,6 +290,7 @@ button {
   border: 2px solid #FF6B6B;
   box-shadow: 0 4px 15px rgba(255, 107, 107, 0.2);
   font-weight: 500;
+  margin-left: -0.5ch;
 }
 
 .success-message {
@@ -299,6 +303,7 @@ button {
   border: 2px solid #4ECDC4;
   box-shadow: 0 4px 15px rgba(78, 205, 196, 0.2);
   font-weight: 500;
+  margin-left: -0.5ch;
 }
 
 .loading {
