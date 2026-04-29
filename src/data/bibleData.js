@@ -1,6 +1,6 @@
 /**
- * Utility for reading Bible verses from GitHub repository
- * Source: https://github.com/lguenth/mdbible/tree/main/by_book
+ * Utility for reading Bible verses from local JSON files
+ * Data source: https://github.com/bobuk/holybooks/tree/master/EN
  */
 
 // Array of Bible book names in biblical order
@@ -18,130 +18,145 @@ const BOOKS_IN_ORDER = [
   '1 Peter', '2 Peter', '1 John', '2 John', '3 John', 'Jude', 'Revelation'
 ];
 
-// Map of Bible book names to their markdown filenames
-const BOOK_NAMES = {
-  'Genesis': '01_Genesis.md',
-  'Exodus': '02_Exodus.md',
-  'Leviticus': '03_Leviticus.md',
-  'Numbers': '04_Numbers.md',
-  'Deuteronomy': '05_Deuteronomy.md',
-  'Joshua': '06_Joshua.md',
-  'Judges': '07_Judges.md',
-  'Ruth': '08_Ruth.md',
-  '1 Samuel': '09_I_Samuel.md',
-  '2 Samuel': '10_II_Samuel.md',
-  '1 Kings': '11_I_Kings.md',
-  '2 Kings': '12_II_Kings.md',
-  '1 Chronicles': '13_I_Chronicles.md',
-  '2 Chronicles': '14_II_Chronicles.md',
-  'Ezra': '15_Ezra.md',
-  'Nehemiah': '16_Nehemiah.md',
-  'Esther': '17_Esther.md',
-  'Job': '18_Job.md',
-  'Psalms': '19_Psalms.md',
-  'Proverbs': '20_Proverbs.md',
-  'Ecclesiastes': '21_Ecclesiastes.md',
-  'Song of Solomon': '22_Song_of_Solomon.md',
-  'Isaiah': '23_Isaiah.md',
-  'Jeremiah': '24_Jeremiah.md',
-  'Lamentations': '25_Lamentations.md',
-  'Ezekiel': '26_Ezekiel.md',
-  'Daniel': '27_Daniel.md',
-  'Hosea': '28_Hosea.md',
-  'Joel': '29_Joel.md',
-  'Amos': '30_Amos.md',
-  'Obadiah': '31_Obadiah.md',
-  'Jonah': '32_Jonah.md',
-  'Micah': '33_Micah.md',
-  'Nahum': '34_Nahum.md',
-  'Habakkuk': '35_Habakkuk.md',
-  'Zephaniah': '36_Zephaniah.md',
-  'Haggai': '37_Haggai.md',
-  'Zechariah': '38_Zechariah.md',
-  'Malachi': '39_Malachi.md',
-  'Matthew': '40_Matthew.md',
-  'Mark': '41_Mark.md',
-  'Luke': '42_Luke.md',
-  'John': '43_John.md',
-  'Acts': '44_Acts.md',
-  'Romans': '45_Romans.md',
-  '1 Corinthians': '46_I_Corinthians.md',
-  '2 Corinthians': '47_II_Corinthians.md',
-  'Galatians': '48_Galatians.md',
-  'Ephesians': '49_Ephesians.md',
-  'Philippians': '50_Philippians.md',
-  'Colossians': '51_Colossians.md',
-  '1 Thessalonians': '52_I_Thessalonians.md',
-  '2 Thessalonians': '53_II_Thessalonians.md',
-  '1 Timothy': '54_I_Timothy.md',
-  '2 Timothy': '55_II_Timothy.md',
-  'Titus': '56_Titus.md',
-  'Philemon': '57_Philemon.md',
-  'Hebrews': '58_Hebrews.md',
-  'James': '59_James.md',
-  '1 Peter': '60_I_Peter.md',
-  '2 Peter': '61_II_Peter.md',
-  '1 John': '62_I_John.md',
-  '2 John': '63_II_John.md',
-  '3 John': '64_III_John.md',
-  'Jude': '65_Jude.md',
-  'Revelation': '66_Revelation_of_John.md'
+// Map of Bible book names to their 3-letter directory codes
+const BOOK_CODES = {
+  // Old Testament
+  'Genesis': 'GEN',
+  'Exodus': 'EXO',
+  'Leviticus': 'LEV',
+  'Numbers': 'NUM',
+  'Deuteronomy': 'DEU',
+  'Joshua': 'JOS',
+  'Judges': 'JDG',
+  'Ruth': 'RUT',
+  '1 Samuel': '1SA',
+  '2 Samuel': '2SA',
+  '1 Kings': '1KI',
+  '2 Kings': '2KI',
+  '1 Chronicles': '1CH',
+  '2 Chronicles': '2CH',
+  'Ezra': 'EZR',
+  'Nehemiah': 'NEH',
+  'Esther': 'EST',
+  'Job': 'JOB',
+  'Psalms': 'PSA',
+  'Proverbs': 'PRO',
+  'Ecclesiastes': 'ECC',
+  'Isaiah': 'ISA',
+  'Jeremiah': 'JER',
+  'Lamentations': 'LAM',
+  'Ezekiel': 'EZK',
+  'Daniel': 'DAN',
+  'Hosea': 'HOS',
+  'Joel': 'JOL',
+  'Amos': 'AMO',
+  'Obadiah': 'OBA',
+  'Jonah': 'JON',
+  'Micah': 'MIC',
+  'Nahum': 'NAM',
+  'Habakkuk': 'HAB',
+  'Zephaniah': 'ZEP',
+  'Haggai': 'HAG',
+  'Zechariah': 'ZEC',
+  'Malachi': 'MAL',
+  // New Testament
+  'Matthew': 'MAT',
+  'Mark': 'MRK',
+  'Luke': 'LUK',
+  'John': 'JHN',
+  'Acts': 'ACT',
+  'Romans': 'ROM',
+  '1 Corinthians': '1CO',
+  '2 Corinthians': '2CO',
+  'Galatians': 'GAL',
+  'Ephesians': 'EPH',
+  'Philippians': 'PHP',
+  'Colossians': 'COL',
+  '1 Thessalonians': '1TH',
+  '2 Thessalonians': '2TH',
+  '1 Timothy': '1TI',
+  '2 Timothy': '2TI',
+  'Titus': 'TIT',
+  'Philemon': 'PHM',
+  'Hebrews': 'HEB',
+  'James': 'JAS',
+  '1 Peter': '1PE',
+  '2 Peter': '2PE',
+  '1 John': '1JN',
+  '2 John': '2JN',
+  '3 John': '3JN',
+  'Jude': 'JUD',
+  'Revelation': 'REV'
 };
 
-// Cache for parsed Bible data
+// Available Bible translations
+export const AVAILABLE_TRANSLATIONS = [
+  { id: 'AMP', name: 'The Amplified Bible' },
+  { id: 'ASV', name: 'American Standard Version' },
+  { id: 'CPDV', name: 'Catholic Public Domain Version' },
+  { id: 'ERV', name: 'English Revised Version' },
+  { id: 'ESV', name: 'English Standard Version' },
+  { id: 'KJV', name: 'King James Version' },
+  { id: 'NASB', name: 'New American Standard Bible' },
+  { id: 'WEB', name: 'World English Bible' }
+];
+
+// Cache for parsed Bible data - keys are "[book]:[translation]"
 const bibleCache = {};
 
 /**
- * Parse markdown content into structured chapter/verse data
- * @param {string} content - Raw markdown content
+ * Determine if a book is in the Old Testament or New Testament
+ * @param {string} bookCode - 3-letter book code
+ * @returns {string} Either 'OT' or 'NT'
+ */
+function getTestament(bookCode) {
+  // Books from Matthew onwards are New Testament
+  const NT_START_CODE = 'MAT';
+  const NT_CODES = ['MAT', 'MRK', 'LUK', 'JHN', 'ACT', 'ROM', '1CO', '2CO', 'GAL', 
+                     'EPH', 'PHP', 'COL', '1TH', '2TH', '1TI', '2TI', 'TIT', 'PHM', 
+                     'HEB', 'JAS', '1PE', '2PE', '1JN', '2JN', '3JN', 'JUD', 'REV'];
+  return NT_CODES.includes(bookCode) ? 'NT' : 'OT';
+}
+
+/**
+ * Parse JSON content into structured chapter/verse data
+ * @param {Object} jsonData - Parsed JSON data from the translation file
  * @param {string} bookName - Name of the book for reference
  * @returns {Object} Structured book data with chapters and verses
  */
-function parseMarkdownContent(content, bookName) {
+function parseJsonContent(jsonData, bookName) {
   const chapters = {};
-  let currentChapter = null;
-  let currentVerse = 0;
-  let chapterVerses = {};
-
-  const lines = content.split('\n');
-
-  for (const line of lines) {
-    const trimmed = line.trim();
-
-    // Check for chapter headers (## Chapter N)
-    if (trimmed.startsWith('## Chapter ')) {
-      // Save previous chapter if exists
-      if (currentChapter !== null && Object.keys(chapterVerses).length > 0) {
-        chapters[currentChapter] = { verses: chapterVerses };
-      }
-
-      const chapterMatch = trimmed.match(/## Chapter (\d+)/);
-      if (chapterMatch) {
-        currentChapter = parseInt(chapterMatch[1]);
-        chapterVerses = {};
-        currentVerse = 0;
-      }
-    }
-    // Check for verse numbers at the start (number followed by period or space)
-    else if (trimmed && /^\d+[\.\s]/.test(trimmed) && currentChapter !== null) {
-      const verseMatch = trimmed.match(/^(\d+)[\.\s](.*)/);
-      if (verseMatch) {
-        currentVerse = parseInt(verseMatch[1]);
-        chapterVerses[currentVerse] = { text: verseMatch[2] };
-      }
-    }
-    // Append continuation of verse text
-    else if (trimmed && currentChapter !== null && currentVerse > 0) {
-      if (chapterVerses[currentVerse]) {
-        chapterVerses[currentVerse].text += ' ' + trimmed;
-      }
-    }
+  
+  // Navigate through the nested text arrays
+  if (!jsonData.text || !Array.isArray(jsonData.text)) {
+    console.error(`Invalid JSON structure for ${bookName}`);
+    return { name: bookName, chapters: {} };
   }
 
-  // Save last chapter
-  if (currentChapter !== null && Object.keys(chapterVerses).length > 0) {
-    chapters[currentChapter] = { verses: chapterVerses };
-  }
+  // Iterate through chapters (first level of text array)
+  jsonData.text.forEach((chapterData, chapterIndex) => {
+    const chapterNum = chapterIndex + 1;
+    const chapterVerses = {};
+
+    // Each chapter has a text array with verses
+    if (chapterData.text && Array.isArray(chapterData.text)) {
+      chapterData.text.forEach((verseData) => {
+        if (verseData.ID && verseData.text) {
+          const verseNum = parseInt(verseData.ID);
+          // Skip empty verses
+          if (verseData.text.trim()) {
+            chapterVerses[verseNum] = {
+              text: verseData.text.trim()
+            };
+          }
+        }
+      });
+    }
+
+    if (Object.keys(chapterVerses).length > 0) {
+      chapters[chapterNum] = { verses: chapterVerses };
+    }
+  });
 
   return {
     name: bookName,
@@ -150,22 +165,25 @@ function parseMarkdownContent(content, bookName) {
 }
 
 /**
- * Fetch markdown content from GitHub repository
- * @param {string} fileName - Filename in the by_book directory
- * @returns {Promise<string>} Raw markdown content
+ * Load JSON file from GitHub holybooks repository
+ * @param {string} bookCode - 3-letter book code
+ * @param {string} translation - Translation ID (e.g., 'ESV', 'KJV')
+ * @returns {Promise<Object>} Parsed JSON data
  */
-async function fetchMarkdownFile(fileName) {
+async function loadJsonFile(bookCode, translation) {
   try {
-    const githubUrl = `https://raw.githubusercontent.com/lguenth/mdbible/main/by_book/${fileName}`;
-    const response = await fetch(githubUrl);
+    const testament = getTestament(bookCode);
+    const url = `https://raw.githubusercontent.com/bobuk/holybooks/master/EN/${testament}/${bookCode}/${translation}.json`;
+    
+    const response = await fetch(url);
     
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     
-    return await response.text();
+    return await response.json();
   } catch (error) {
-    throw new Error(`Failed to load markdown file ${fileName}: ${error.message}`);
+    throw new Error(`Failed to load ${translation} for ${bookCode}: ${error.message}`);
   }
 }
 
@@ -174,29 +192,32 @@ async function fetchMarkdownFile(fileName) {
  * @param {string} book - Book name (e.g., "John", "Psalms")
  * @param {number} chapter - Chapter number
  * @param {number} verse - Verse number
- * @returns {Promise<{text: string, reference: string}|null>} Verse text or null if not found
+ * @param {string} translation - Translation ID (default: 'ESV')
+ * @returns {Promise<{text: string, reference: string, translation: string}|null>} Verse text or null if not found
  */
-export async function getVerse(book, chapter, verse) {
+export async function getVerse(book, chapter, verse, translation = 'ESV') {
   try {
-    // Normalize book name for filename lookup
-    const fileName = BOOK_NAMES[book];
-    if (!fileName) {
+    // Normalize book name and get book code
+    const bookCode = BOOK_CODES[book];
+    if (!bookCode) {
       console.error(`Unknown book: ${book}`);
       return null;
     }
 
+    const cacheKey = `${book}:${translation}`;
+
     // Check cache first
-    if (!bibleCache[book]) {
+    if (!bibleCache[cacheKey]) {
       try {
-        const content = await fetchMarkdownFile(fileName);
-        bibleCache[book] = parseMarkdownContent(content, book);
+        const jsonData = await loadJsonFile(bookCode, translation);
+        bibleCache[cacheKey] = parseJsonContent(jsonData, book);
       } catch (error) {
-        console.error(`Failed to load ${book}: ${error.message}`);
+        console.error(`Failed to load ${book} (${translation}): ${error.message}`);
         return null;
       }
     }
 
-    const bookData = bibleCache[book];
+    const bookData = bibleCache[cacheKey];
     
     // Get chapter data
     const chapterData = bookData.chapters[chapter];
@@ -216,7 +237,8 @@ export async function getVerse(book, chapter, verse) {
 
     return {
       text: verseData.text,
-      reference: `${book} ${chapter}:${verse}`
+      reference: `${book} ${chapter}:${verse}`,
+      translation: translation
     };
   } catch (error) {
     console.error(`Error fetching verse: ${error.message}`);
@@ -235,26 +257,29 @@ export function getBooks() {
 /**
  * Get available chapters for a book
  * @param {string} book - Book name
+ * @param {string} translation - Translation ID (default: 'ESV')
  * @returns {Promise<number[]>} Array of chapter numbers
  */
-export async function getChapters(book) {
+export async function getChapters(book, translation = 'ESV') {
   try {
-    const fileName = BOOK_NAMES[book];
-    if (!fileName) {
+    const bookCode = BOOK_CODES[book];
+    if (!bookCode) {
       return [];
     }
 
-    if (!bibleCache[book]) {
+    const cacheKey = `${book}:${translation}`;
+
+    if (!bibleCache[cacheKey]) {
       try {
-        const content = await fetchMarkdownFile(fileName);
-        bibleCache[book] = parseMarkdownContent(content, book);
+        const jsonData = await loadJsonFile(bookCode, translation);
+        bibleCache[cacheKey] = parseJsonContent(jsonData, book);
       } catch (error) {
-        console.error(`Failed to load ${book}: ${error.message}`);
+        console.error(`Failed to load ${book} (${translation}): ${error.message}`);
         return [];
       }
     }
 
-    const bookData = bibleCache[book];
+    const bookData = bibleCache[cacheKey];
     
     // Get all chapter numbers from the chapters object
     return Object.keys(bookData.chapters)
@@ -270,26 +295,29 @@ export async function getChapters(book) {
  * Get available verses for a chapter
  * @param {string} book - Book name
  * @param {number} chapter - Chapter number
+ * @param {string} translation - Translation ID (default: 'ESV')
  * @returns {Promise<number[]>} Array of verse numbers
  */
-export async function getVerses(book, chapter) {
+export async function getVerses(book, chapter, translation = 'ESV') {
   try {
-    const fileName = BOOK_NAMES[book];
-    if (!fileName) {
+    const bookCode = BOOK_CODES[book];
+    if (!bookCode) {
       return [];
     }
 
-    if (!bibleCache[book]) {
+    const cacheKey = `${book}:${translation}`;
+
+    if (!bibleCache[cacheKey]) {
       try {
-        const content = await fetchMarkdownFile(fileName);
-        bibleCache[book] = parseMarkdownContent(content, book);
+        const jsonData = await loadJsonFile(bookCode, translation);
+        bibleCache[cacheKey] = parseJsonContent(jsonData, book);
       } catch (error) {
-        console.error(`Failed to load ${book}: ${error.message}`);
+        console.error(`Failed to load ${book} (${translation}): ${error.message}`);
         return [];
       }
     }
 
-    const bookData = bibleCache[book];
+    const bookData = bibleCache[cacheKey];
     
     // Get chapter data
     const chapterData = bookData.chapters[chapter];
@@ -313,5 +341,6 @@ export default {
   getBooks,
   getChapters,
   getVerses,
-  BOOK_NAMES
+  AVAILABLE_TRANSLATIONS,
+  BOOK_CODES
 };

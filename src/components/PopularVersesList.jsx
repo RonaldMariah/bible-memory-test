@@ -1,7 +1,7 @@
 import React from 'react';
 import popularVerses from '../data/popularVerses.js';
 
-function PopularVersesList({ onSelectVerse }) {
+function PopularVersesList({ onSelectVerse, translation = 'ESV' }) {
   return (
     <div className="popular-verses">
       <p style={{ color: '#000000ff', marginBottom: '1rem', fontSize: '0.9rem' }}>
@@ -12,12 +12,12 @@ function PopularVersesList({ onSelectVerse }) {
           <li
             key={verse.reference}
             className="verse-item"
-            onClick={() => onSelectVerse(verse)}
+            onClick={() => onSelectVerse({ ...verse, translation })}
             role="button"
             tabIndex="0"
             onKeyPress={(e) => {
               if (e.key === 'Enter') {
-                onSelectVerse(verse);
+                onSelectVerse({ ...verse, translation });
               }
             }}
           >

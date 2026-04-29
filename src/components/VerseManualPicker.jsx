@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getBooks, getChapters, getVerses, getVerse } from '../data/bibleData.js';
 
-function VerseManualPicker({ onSelectVerse }) {
+function VerseManualPicker({ onSelectVerse, translation = 'ESV' }) {
   const [books, setBooks] = useState([]);
   const [chapters, setChapters] = useState([]);
   const [verses, setVerses] = useState([]);
@@ -28,7 +28,7 @@ function VerseManualPicker({ onSelectVerse }) {
     
     setLoading(true);
     setError('');
-    getChapters(selectedBook)
+    getChapters(selectedBook, translation)
       .then((chapterList) => {
         setChapters(chapterList);
         if (chapterList.length > 0) {
@@ -42,7 +42,7 @@ function VerseManualPicker({ onSelectVerse }) {
         setError('Failed to load chapters');
         setLoading(false);
       });
-  }, [selectedBook]);
+  }, [selectedBook, translation]);
 
   // Load verses when chapter changes
   useEffect(() => {
@@ -50,7 +50,7 @@ function VerseManualPicker({ onSelectVerse }) {
 
     setLoading(true);
     setError('');
-    getVerses(selectedBook, parseInt(selectedChapter))
+    getVerses(selectedBook, parseInt(selectedChapter), translation)
       .then((verseList) => {
         setVerses(verseList);
         if (verseList.length > 0) {
@@ -62,7 +62,7 @@ function VerseManualPicker({ onSelectVerse }) {
         setError('Failed to load verses');
         setLoading(false);
       });
-  }, [selectedBook, selectedChapter]);
+  }, [selectedBook, selectedChapter, translation]);
 
   // Load preview verse when selections change
   useEffect(() => {
@@ -72,7 +72,7 @@ function VerseManualPicker({ onSelectVerse }) {
     }
 
     setPreviewLoading(true);
-    getVerse(selectedBook, parseInt(selectedChapter), parseInt(selectedVerse))
+    getVerse(selectedBook, parseInt(selectedChapter), parseInt(selectedVerse), translation)
       .then((verse) => {
         setPreviewVerse(verse);
         setPreviewLoading(false);
@@ -81,7 +81,7 @@ function VerseManualPicker({ onSelectVerse }) {
         setPreviewVerse(null);
         setPreviewLoading(false);
       });
-  }, [selectedBook, selectedChapter, selectedVerse]);
+  }, [selectedBook, selectedChapter, selectedVerse, translation]);
 
   const handleSelectVerse = () => {
     if (!selectedBook || !selectedChapter || !selectedVerse) {

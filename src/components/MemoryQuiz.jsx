@@ -8,7 +8,7 @@ const DIFFICULTY_LEVELS = {
   mastery: { label: 'Mastery', missRate: 1.0 }
 };
 
-function MemoryQuiz({ selectedVerse, onSelectNewVerse }) {
+function MemoryQuiz({ selectedVerse, onSelectNewVerse, translation = 'ESV' }) {
   const [verseText, setVerseText] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -21,7 +21,7 @@ function MemoryQuiz({ selectedVerse, onSelectNewVerse }) {
   const [currentFocusIndex, setCurrentFocusIndex] = useState(0);
   const inputRefs = useRef([]);
 
-  // Fetch verse when selected
+  // Fetch verse when selected or translation changes
   useEffect(() => {
     if (!selectedVerse) return;
 
@@ -31,7 +31,7 @@ function MemoryQuiz({ selectedVerse, onSelectNewVerse }) {
       setDifficulty(null);
       setFeedback('');
 
-      const verse = await getVerse(selectedVerse.book, selectedVerse.chapter, selectedVerse.verse);
+      const verse = await getVerse(selectedVerse.book, selectedVerse.chapter, selectedVerse.verse, translation);
       if (verse) {
         setVerseText(verse.text);
       } else {
@@ -41,7 +41,7 @@ function MemoryQuiz({ selectedVerse, onSelectNewVerse }) {
     };
 
     fetchVerse();
-  }, [selectedVerse]);
+  }, [selectedVerse, translation]);
 
   // Generate blanks when difficulty is selected
   useEffect(() => {
