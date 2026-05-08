@@ -247,6 +247,76 @@ export async function getVerse(book, chapter, verse, translation = 'ESV') {
 }
 
 /**
+ * Get a range of verses from the same chapter
+ * @param {string} book - Book name
+ * @param {number} chapter - Chapter number
+ * @param {number} startVerse - Starting verse number
+ * @param {number} endVerse - Ending verse number
+ * @param {string} translation - Translation ID (default: 'ESV')
+ * @returns {Promise<Object>} Object containing reference and combined text of verses
+ */
+export async function getVerseRange(book, chapter, startVerse, endVerse, translation = 'ESV') {
+  try {
+    const bookCode = BOOK_CODES[book];
+    if (!bookCode) {
+      console.error(`Unknown book: ${book}`);
+      return null;
+    }
+
+    const cacheKey = `${book}:${translation}`;
+
+    // Check cache first
+    if (!bibleCache[cacheKey]) {
+      try {
+        const jsonData = await loadJsonFile(bookCode, translation);
+        bibleCache[cacheKey] = parseJsonContent(jsonData, book);
+      } catch (error) {
+        console.error(`Failed to load ${book} (${translation}): ${error.message}`);
+        return null;
+      }
+    }
+
+    const bookData = bibleCache[cacheKey];
+    
+    // Get chapter data
+    const chapterData = bookData.chapters[chapter];
+    
+    if (!chapterData) {
+      console.error(`Chapter ${chapter} not found in ${book}`);
+      return null;
+    }
+
+    // Collect all verses in the range
+    const verseTexts = [];
+    let lastFoundVerse = startVerse - 1;
+
+    for (let verseNum = startVerse; verseNum <= endVerse; verseNum++) {
+      const verseData = chapterData.verses[verseNum];
+      
+      if (verseData) {
+        verseTexts.push(verseData.text);
+        lastFoundVerse = verseNum;
+      }
+    }
+
+    if (verseTexts.length === 0) {
+      console.error(`No verses found in range ${startVerse}-${endVerse} in ${book} ${chapter}`);
+      return null;
+    }
+
+    return {
+      text: verseTexts.join(' '),
+      reference: `${book} ${chapter}:${startVerse}-${endVerse}`,
+      translation: translation,
+      verseCount: verseTexts.length
+    };
+  } catch (error) {
+    console.error(`Error fetching verse range: ${error.message}`);
+    return null;
+  }
+}
+
+/**
  * Get list of available books in biblical order
  * @returns {string[]} Array of book names in biblical order
  */
@@ -338,6 +408,7 @@ export async function getVerses(book, chapter, translation = 'ESV') {
 
 export default {
   getVerse,
+  getVerseRange,
   getBooks,
   getChapters,
   getVerses,

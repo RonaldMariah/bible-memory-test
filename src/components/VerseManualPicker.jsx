@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { getBooks, getChapters, getVerses, getVerse } from '../data/bibleData.js';
+import { getBooks, getChapters, getVerses, getVerse, getVerseRange } from '../data/bibleData.js';
+import VerseSelector from './VerseSelector.jsx';
 
 function VerseManualPicker({ onSelectVerse, translation = 'ESV' }) {
   const [books, setBooks] = useState([]);
@@ -7,11 +8,10 @@ function VerseManualPicker({ onSelectVerse, translation = 'ESV' }) {
   const [verses, setVerses] = useState([]);
   const [selectedBook, setSelectedBook] = useState('');
   const [selectedChapter, setSelectedChapter] = useState('');
-  const [selectedVerse, setSelectedVerse] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [showVerseSelector, setShowVerseSelector] = useState(false);
   const [previewVerse, setPreviewVerse] = useState(null);
-  const [previewLoading, setPreviewLoading] = useState(false);
 
   // Load books on mount
   useEffect(() => {
@@ -33,8 +33,8 @@ function VerseManualPicker({ onSelectVerse, translation = 'ESV' }) {
         setChapters(chapterList);
         if (chapterList.length > 0) {
           setSelectedChapter(chapterList[0].toString());
-          setSelectedVerse('');
           setVerses([]);
+          setPreviewVerse(null);
         }
         setLoading(false);
       })
@@ -53,9 +53,7 @@ function VerseManualPicker({ onSelectVerse, translation = 'ESV' }) {
     getVerses(selectedBook, parseInt(selectedChapter), translation)
       .then((verseList) => {
         setVerses(verseList);
-        if (verseList.length > 0) {
-          setSelectedVerse(verseList[0].toString());
-        }
+        setPreviewVerse(null);
         setLoading(false);
       })
       .catch((err) => {
@@ -64,43 +62,56 @@ function VerseManualPicker({ onSelectVerse, translation = 'ESV' }) {
       });
   }, [selectedBook, selectedChapter, translation]);
 
-  // Load preview verse when selections change
+  // Load preview verse(s) when they're selected
   useEffect(() => {
-    if (!selectedBook || !selectedChapter || !selectedVerse) {
-      setPreviewVerse(null);
-      return;
-    }
+    const loadPreview = async () => {
+      if (!previewVerse) return;
 
-    setPreviewLoading(true);
-    getVerse(selectedBook, parseInt(selectedChapter), parseInt(selectedVerse), translation)
-      .then((verse) => {
-        setPreviewVerse(verse);
-        setPreviewLoading(false);
-      })
-      .catch(() => {
-        setPreviewVerse(null);
-        setPreviewLoading(false);
-      });
-  }, [selectedBook, selectedChapter, selectedVerse, translation]);
+      try {
+        let verseData;
+        if (previewVerse.isRange) {
+          verseData = await getVerseRange(
+            previewVerse.book,
+            previewVerse.chapter,
+            previewVerse.startVerse,
+            previewVerse.endVerse,
+            translation
+          );
+        } else {
+          verseData = await getVerse(
+            previewVerse.book,
+            previewVerse.chapter,
+            previewVerse.verse,
+            translation
+          );
+        }
+        setPreviewVerse(verseData);
+      } catch (err) {
+        console.error('Error loading preview:', err);
+      }
+    };
+
+    loadPreview();
+  }, [translation]);
 
   const handleSelectVerse = () => {
-    if (!selectedBook || !selectedChapter || !selectedVerse) {
-      setError('Please select a book, chapter, and verse');
+    if (!selectedBook || !selectedChapter) {
+      setError('Please select a book and chapter');
       return;
     }
+    setShowVerseSelector(true);
+  };
 
-    onSelectVerse({
-      reference: `${selectedBook} ${selectedChapter}:${selectedVerse}`,
-      book: selectedBook,
-      chapter: parseInt(selectedChapter),
-      verse: parseInt(selectedVerse)
-    });
+  const handleVerseSelection = (selectedVerseData) => {
+    setShowVerseSelector(false);
+    setPreviewVerse(selectedVerseData);
+    onSelectVerse(selectedVerseData);
   };
 
   return (
     <div className="verse-picker">
       <p style={{ color: '#999', marginBottom: '1rem', fontSize: '0.9rem' }}>
-        Manually select any Bible verse:
+        Manually select any Bible verse or verse range:
       </p>
       
       {error && <div className="error-message">{error}</div>}
@@ -137,22 +148,6 @@ function VerseManualPicker({ onSelectVerse, translation = 'ESV' }) {
         </select>
       </div>
 
-      <div className="form-group">
-        <label htmlFor="verse-select">Verse</label>
-        <select
-          id="verse-select"
-          value={selectedVerse}
-          onChange={(e) => setSelectedVerse(e.target.value)}
-          disabled={loading || verses.length === 0}
-        >
-          {verses.map((verse) => (
-            <option key={verse} value={verse}>
-              {verse}
-            </option>
-          ))}
-        </select>
-      </div>
-
       {previewVerse && (
         <div className="verse-preview">
           <h4 style={{ marginTop: '1rem', marginBottom: '0.5rem' }}>Preview</h4>
@@ -174,10 +169,20 @@ function VerseManualPicker({ onSelectVerse, translation = 'ESV' }) {
       <button
         className="btn-primary"
         onClick={handleSelectVerse}
-        disabled={loading || !selectedVerse}
+        disabled={loading || !selectedChapter || verses.length === 0}
       >
-        {loading ? 'Loading...' : 'Select Verse'}
+        {loading ? 'Loading...' : 'Select Verses'}
       </button>
+
+      {showVerseSelector && verses.length > 0 && (
+        <VerseSelector
+          verses={verses}
+          book={selectedBook}
+          chapter={selectedChapter}
+          onSelect={handleVerseSelection}
+          onCancel={() => setShowVerseSelector(false)}
+        />
+      )}
     </div>
   );
 }

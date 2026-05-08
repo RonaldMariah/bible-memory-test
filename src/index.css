@@ -191,11 +191,71 @@
     @apply flex flex-col gap-3 text-black;
     font-family: 'Courier New', Courier, monospace;
   }
+
+  .verse-selector-overlay {
+    @apply fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4;
+  }
+
+  .verse-selector-dialog {
+    @apply bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[85vh] overflow-y-auto;
+  }
+
+  .verse-selector-header {
+    @apply sticky top-0 bg-gradient-to-r from-blue-50 to-indigo-50 p-6 border-b-2 border-blue-200;
+  }
+
+  .verse-selector-header h3 {
+    @apply text-xl font-bold text-primary m-0 mb-4;
+  }
+
+  .mode-toggle-btn {
+    @apply px-4 py-2 mx-1 rounded-lg border-2 border-blue-300 bg-white text-primary font-semibold transition-all cursor-pointer;
+  }
+
+  .mode-toggle-btn.active {
+    @apply bg-blue-500 text-white border-blue-500;
+  }
+
+  .mode-toggle-btn:hover {
+    @apply bg-blue-100;
+  }
+
+  .mode-toggle-btn.active:hover {
+    @apply bg-blue-600;
+  }
+
+  .verse-grid {
+    @apply p-6;
+  }
+
+  .verse-row {
+    @apply flex flex-wrap gap-3 mb-3;
+  }
+
+  .verse-btn {
+    @apply flex-1 px-3 py-2 rounded-lg border-2 border-blue-200 bg-white text-primary font-semibold transition-all cursor-pointer;
+  }
+
+  .verse-btn:hover {
+    @apply bg-blue-50 border-blue-300 -translate-y-1 shadow-md;
+  }
+
+  .verse-btn.selected {
+    @apply bg-blue-500 text-white border-blue-500;
+  }
+
+  .verse-btn.in-range {
+    @apply bg-blue-200 border-blue-400 text-primary;
+  }
+
+  .verse-selector-footer {
+    @apply sticky bottom-0 bg-gradient-to-r from-blue-50 to-indigo-50 p-6 border-t-2 border-blue-200 flex gap-3;
+  }
 }
 
 /* Touch-friendly improvements */
 @media (hover: none) and (pointer: coarse) {
   button {
-    @apply min-h-[48px];
+    min-height: 48px;
   }
 }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { getVerse } from '../data/bibleData.js';
+import { getVerse, getVerseRange } from '../data/bibleData.js';
 
 const DIFFICULTY_LEVELS = {
   easy: { label: 'Easy', missRate: 0.2 },
@@ -31,7 +31,13 @@ function MemoryQuiz({ selectedVerse, onSelectNewVerse, translation = 'ESV' }) {
       setDifficulty(null);
       setFeedback('');
 
-      const verse = await getVerse(selectedVerse.book, selectedVerse.chapter, selectedVerse.verse, translation);
+      let verse;
+      if (selectedVerse.isRange) {
+        verse = await getVerseRange(selectedVerse.book, selectedVerse.chapter, selectedVerse.startVerse, selectedVerse.endVerse, translation);
+      } else {
+        verse = await getVerse(selectedVerse.book, selectedVerse.chapter, selectedVerse.verse, translation);
+      }
+      
       if (verse) {
         setVerseText(verse.text);
       } else {
