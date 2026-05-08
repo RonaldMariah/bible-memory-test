@@ -233,7 +233,7 @@
   }
 
   .verse-btn {
-    @apply flex-1 px-3 py-2 rounded-lg border-2 border-blue-200 bg-white text-primary font-semibold transition-all cursor-pointer text-left items-start justify-start;
+    @apply flex-1 px-3 py-2 rounded-lg border-2 border-blue-200 bg-white text-primary font-semibold transition-all cursor-pointer flex-wrap;
   }
 
   .verse-btn:hover {
