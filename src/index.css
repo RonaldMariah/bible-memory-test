@@ -229,11 +229,11 @@
   }
 
   .verse-row {
-    @apply flex flex-wrap gap-3 mb-3;
+    @apply flex gap-3 mb-3;
   }
 
   .verse-btn {
-    @apply flex-1 px-3 py-2 rounded-lg border-2 border-blue-200 bg-white text-primary font-semibold transition-all cursor-pointer;
+    @apply flex-1 px-3 py-2 rounded-lg border-2 border-blue-200 bg-white text-primary font-semibold transition-all cursor-pointer text-left items-start justify-start;
   }
 
   .verse-btn:hover {
